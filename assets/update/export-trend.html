@@ -1,0 +1,184 @@
+<!--
+	此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=multiple-y-axis&code=xVZPa9RAFL8X-h0GpKTCsp2Z_N_ioScpFhQURUoP2d3ZbTBNliStXcoetJRCQdaDB1GLpYIVKYgotrS1fpmmqye_gm8m2U32T0ttbb3kTd68_PLeb37zZkqeG4So5DmeH6AbaFq6pmIdl8tSDknXilpZkxUxVLEq61QMmaErGpFmxoeHvFpoey58tzQ8hGKUQgKW457Q85zQrhXieXj37WqVQYxkLdqBJGIQ4uM7nu2GfCaJhNh6jUFgyfeCQIqdDW4a4quqb5c7wYA6G0IsVUdEZBzCf170FjtRFWaF8z5gdn5RtkLrvs0egwsFsx7Y0J9nOeQzq3zbdeoFVLGcgCV44k8sCD2BkfkgMx9YC2wimJyzqn0xfSU4rMrctAieTAEWIFrdi5rvfq02OdnJy-a6eFn50Hq-HO0-jd7sRc82jj-9SEOO9neONw6kmRR-cQJoBcAYvY9WK2RVz6-31yBehXt26VGGH3A6dtV9YIezU1aROXEp7dm06nbqFFPMUwJLEiskA1ZOrFATWDVONSFkRkDVuzIeG0Ot7W1ytPvx4c_vX38fvOoQg0Zv3byOouaXo8OtwdUtWM48S0tzrTnu7QDw79PZmhfYXMYQIYSUoYRXzzmBrIQyslxN2W5WS7D2qYJSpwNRd8O60x3as1emcUJGh5BufsXv4gXIgFQ8f84KxaaRlkTFjWSfdEDaEDGXtI_LzfXRaGW5zSWKnjRbW_vnoDTBuRCnXqUSMNjFBr40msmV0CxnaO7bsaMjwPbO-79VbjfCQJ4dVvkf0qX_iFMUt-4TWVV6xRt3PK67MdEOBKnnlnA32kUIvgIdy5el47QXB8y3WVczPn77ubX2LXp9SLK9uIfp3k6b8pWsQdHyU59o-JNumcEhnbKVnCYKJRibcg7JpqlhAwaKohimzD06VlRMwCObuqZjGOi6honRPlNS5XSyptmud2rW_LA9a9akN2tV0Q1Vx5qaQzpcpExNliFPwzQVRccqeE0sU4VS08ghAkNKNSLGxMAa1TDWB9Sw9rK196PNfF9LOaGYAZeFnqq42AaXRXvLkpU85XwbeZMbM6_FRqc5pNI85kbJ4_Y5Nij5dAHivXbaGiS3mbMnLPcmTDQCQiGaYcLTlJUcooSIpwZ-Sgy16_4xPNQY_wM&enc=deflate
+	⚠ 请注意，该图表不是 Apache ECharts 官方示例，而是由用户代码生成的。请注意鉴别其内容。
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    const colors = ['#5070dd', '#b6d634', '#505372', '#e87461'];
+option = {
+  color: colors,
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross'
+    }
+  },
+  grid: {
+    right: '25%'
+  },
+  toolbox: {
+    feature: {
+      dataView: { show: true, readOnly: false },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  legend: {
+    data: ['出口量', '出口额', '全球市场占比', '出口价格']
+  },
+  xAxis: [
+    {
+      type: 'category',
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['2020', '2021', '2022', '2023', '2024', '2025']
+    }
+  ],
+  yAxis: [
+    // 第1个Y轴：出口量 (KG) 右侧
+    {
+      type: 'value',
+      name: '出口量(KG)',
+      position: 'right',
+      alignTicks: true,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: colors[0]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    // 第2个Y轴：出口额(元) 右侧 偏移
+    {
+      type: 'value',
+      name: '出口额(元)',
+      position: 'right',
+      alignTicks: true,
+      offset: 80,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: colors[1]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    // 第3个Y轴：全球市场占比(%) 左侧
+    {
+      type: 'value',
+      name: '市场占比(%)',
+      position: 'left',
+      alignTicks: true,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: colors[2]
+        }
+      },
+      axisLabel: {
+        formatter: '{value} %'
+      }
+    },
+    // 第4个Y轴：出口价格(元/KG) 左侧 偏移
+    {
+      type: 'value',
+      name: '出口价格(元/KG)',
+      position: 'left',
+      alignTicks: true,
+      offset: 80,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: colors[3]
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    }
+  ],
+  series: [
+    // 柱状图1：出口量
+    {
+      name: '出口量',
+      type: 'bar',
+      yAxisIndex: 0,
+      data: [4210093, 3996083, 4448933, 3704501, 4397670, 4776018]
+    },
+    // 柱状图2：出口额
+    {
+      name: '出口额',
+      type: 'bar',
+      yAxisIndex: 1,
+      data: [547857065, 707096331, 899447055, 903242298, 1032226198, 1180626007]
+    },
+    // 折线图1：全球市场占比
+    {
+      name: '全球市场占比',
+      type: 'line',
+      yAxisIndex: 2,
+      data: [34.21, 48.91, 49.61, 49.72, 52.02, 54.00]
+    },
+    // 折线图2：出口价格
+    {
+      name: '出口价格',
+      type: 'line',
+      yAxisIndex: 3,
+      data: [1613, 1689, 1934, 2114, 2163, 2185]
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>
